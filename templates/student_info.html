@@ -4,8 +4,17 @@
     <title>Student Info</title>
 </head>
 <body>
-<h1>{{ first }} {{ last }}</h1>
+    <h1>{{ first }} {{ last }}</h1>
 
-<p>Github Account: {{ github }}</p>
+    <p>Github Account: {{ github }}</p>
+
+    <p>Projects:</p>
+    <ul>
+        {% for project_title, grade in student_projects %}
+            <li>
+                Project Title: <a href="/project?project={{ project_title }}">{{ project_title }}</a>, Grade: {{ grade }}
+            </li>
+        {% endfor %}
+    </ul>
 </body>
 </html>

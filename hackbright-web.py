@@ -9,12 +9,14 @@ app = Flask(__name__)
 def get_student():
     """Show information about a student."""
 
-    github = request.args.get("github", "jhacks")
+    github = request.args.get("github")
     first, last, github = hackbright.get_student_by_github(github)
+    student_projects = hackbright.get_grades_by_github(github)
     html = render_template("student_info.html",
                            first=first,
                            last=last,
-                           github=github)
+                           github=github,
+                           student_projects=student_projects)
     return html
 
 
@@ -47,6 +49,19 @@ def add_student():
                                first_name=first_name,
                                last_name=last_name,
                                github=github)
+
+
+@app.route("/project")
+def show_project_info():
+    """Shows a projects information."""
+
+    project = request.args.get("project")
+    title, description, max_grade = hackbright.get_project_by_title(project)
+
+    return render_template("project.html",
+                           title=title,
+                           description=description,
+                           max_grade=max_grade)
 
 
 if __name__ == "__main__":
